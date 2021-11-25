@@ -3,7 +3,7 @@
 A new Flutter project.
 
 ## Env
-- Flutter 2.5.1
+- Flutter 2.5.3
 - [Amplify Cli](https://docs.amplify.aws/star)
 
 
@@ -18,4 +18,7 @@ A new Flutter project.
     amplify init
     ```
     * Setting up project on your own
-- 
+- Add Auth
+    ```
+    amplify add auth
+    ```
