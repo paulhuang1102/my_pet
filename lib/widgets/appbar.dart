@@ -13,7 +13,7 @@ class DefaultAppbar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool showLeading = routeName != ROUTES.eating;
+    final bool showLeading = routeName != ROUTES.home;
 
     if (userController.user != null) {
       _actions.add(OutlinedButton(
