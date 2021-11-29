@@ -1,5 +1,9 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:my_pet/models/credentail_model.dart';
+import 'package:my_pet/models/user_model.dart';
 import 'package:my_pet/services/amplify/amplify_service.dart';
+import 'package:my_pet/services/amplify/graphql/mutations/user_mutation.dart';
+import 'package:my_pet/services/amplify/graphql/queries/user_query.dart';
 
 class UserRepository {
   final _amplify = AmplifyService();
@@ -26,7 +30,7 @@ class UserRepository {
     return _amplify.auth.verifyCode(code);
   }
 
-  Future<String> fetchUser() async {
+  Future<AuthUser> fetchUser() async {
     return _amplify.auth.featchUser();
   }
 
@@ -36,5 +40,24 @@ class UserRepository {
 
   Future logout() async {
     return _amplify.auth.logout();
+  }
+
+  Future<User?> getUserData(String id) async {
+    final res = await _amplify.api.query(getUser, {'id': id});
+
+    if (res.success && res.data['getUser'] != null) {
+      return User(id: id, name: res.data['getUser']['name']);
+    }
+  }
+
+  Future<User?> createUserData(String cognitoId, String name) async {
+    final res = await _amplify.api.mutation(createUser, {
+      'id': cognitoId,
+      'name': name,
+    });
+
+    if (res.success) {
+      return User(id: cognitoId, name: name);
+    }
   }
 }

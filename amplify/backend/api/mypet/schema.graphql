@@ -1,0 +1,29 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type User @model {
+  id: ID!
+  name: String!
+}
+
+type Pet @model
+  @key(name: "byPetName", fields: ["name"], queryField: "petsByName")
+  @key(name: "byUserId", fields: ["userId"], queryField: "petsByUserId")
+{
+  id: ID!
+  name: String
+  userId: String!
+  photoUrl: String
+}
+
+type Eating @model
+  @key(name: "byPetId", fields: ["petId"], queryField: "eatingsByPetId")
+{
+  id: ID!
+  petId: ID!
+  food: String!
+  timestamp: Int!
+}

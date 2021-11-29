@@ -21,16 +21,20 @@ class UserController extends GetxController {
     _user(user);
   }
 
-  void setUserName(String name) {
-    _user(User(name: name));
-  }
-
   void loginUser() async {
-    final name = await _repo.fetchUser();
-    setUserName(name);
+    final cognitoUser = await _repo.fetchUser();
+
+    setUser(User(name: cognitoUser.username, id: cognitoUser.userId));
+    final user = await _repo.getUserData(cognitoUser.userId);
+
+    if (user != null) {
+      setUser(user);
+      Get.offNamed(ROUTES.home);
+    } else {
+      Get.offNamed(ROUTES.createUser);
+    }
     // AnalyticsService.log(LoginEvent());
 
-    Get.offNamed(ROUTES.home);
   }
 
   void checkUser() async {

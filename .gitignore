@@ -53,6 +53,8 @@ amplify/mock-data
 amplify/backend/amplify-meta.json
 amplify/backend/awscloudformation
 amplify/backend/.temp
+amplify/team-provider-info.json
+
 build/
 dist/
 node_modules/
@@ -68,7 +70,6 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 
-amplify/
 **/amplifyconfiguration.dart
 
 *.keystore

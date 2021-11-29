@@ -4,10 +4,10 @@ class FoodRepository {
   final AmplifyService _amplify = AmplifyService();
 
   getList() {
-    _amplify.api.get('/eatings', apiName: 'mypetapi');
+    // _amplify.api.get('/eatings', apiName: 'mypetapi');
   }
   
   addFood(food) {
-    _amplify.api.post('/food', food, apiName: 'mypetfood');
+    // _amplify.api.post('/food', food, apiName: 'mypetfood');
   }
 }

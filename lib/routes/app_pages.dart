@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:my_pet/bindings/create_user_binding.dart';
 import 'package:my_pet/bindings/eating_binding.dart';
 import 'package:my_pet/bindings/login_binding.dart';
 import 'package:my_pet/bindings/signup_binding.dart';
 import 'package:my_pet/bindings/verify_binding.dart';
 import 'package:my_pet/middlewares/route_auth.dart';
+import 'package:my_pet/pages/create_user_page.dart';
 import 'package:my_pet/pages/eating_page.dart';
 import 'package:my_pet/pages/home_page.dart';
 import 'package:my_pet/pages/login_page.dart';
@@ -52,6 +54,14 @@ abstract class AppPages {
       name: ROUTES.eating,
       page: () => EatingPage(),
       binding: EatingBinding(),
+      middlewares: [
+        RouteAuthMiddleware(),
+      ],
+    ),
+    GetPage(
+      name: ROUTES.createUser,
+      page: () => CreateUserPage(),
+      bindings: [CreateUserBinding()],
       middlewares: [
         RouteAuthMiddleware(),
       ],

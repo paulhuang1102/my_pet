@@ -13,7 +13,7 @@ void main() async {
 }
 
 initialize() async {
-  Get.put<UserController>(UserController(UserRepository()));
+  Get.put<UserController>(UserController(UserRepository()), permanent: true);
 }
 
 class MyApp extends StatefulWidget {
