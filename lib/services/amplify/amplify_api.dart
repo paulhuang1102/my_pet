@@ -27,6 +27,11 @@ class AmplifyApi {
       return ApiResponse(
         success: false,
       );
+    } catch (e) {
+      Log.error('Query App failed: $e');
+      return ApiResponse(
+        success: false,
+      );
     }
   }
 
@@ -39,6 +44,9 @@ class AmplifyApi {
       final operation = Amplify.API.mutate(request: request);
       final response = await operation.response;
 
+      Log.debug('Mutation result: ${response.data}');
+      Log.waring('Mutation errors: ${response.errors}');
+
       final data = json.decode(response.data);
 
       return ApiResponse(
@@ -47,6 +55,11 @@ class AmplifyApi {
       );
     } on ApiException catch (e) {
       Log.error('Mutation failed: $e');
+      return ApiResponse(
+        success: false,
+      );
+    } catch (e) {
+      Log.error('Mutation App failed: $e');
       return ApiResponse(
         success: false,
       );

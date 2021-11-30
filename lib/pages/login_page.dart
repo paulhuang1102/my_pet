@@ -5,7 +5,6 @@ import 'package:get/route_manager.dart';
 import 'package:my_pet/controllers/login_controller.dart';
 import 'package:my_pet/controllers/user_controller.dart';
 import 'package:my_pet/routes/app_pages.dart';
-import 'package:my_pet/utils/logger.dart';
 
 class LoginPage extends StatelessWidget {
   final UserController controller = UserController.to;
@@ -42,19 +41,6 @@ class LoginPage extends StatelessWidget {
                       await loginController.login();
                     },
                     child: const Text('Login'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        // final result = await LineSDK.instance.login();
-                        // user id -> result.userProfile?.userId
-                        // user name -> result.userProfile?.displayName
-                        // user avatar -> result.userProfile?.pictureUrl
-                      } on PlatformException catch (e) {
-                        Log.error(e.toString());
-                      }
-                    },
-                    child: const Text('Line'),
                   ),
                   // ElevatedButton(
                   //   onPressed: () async {

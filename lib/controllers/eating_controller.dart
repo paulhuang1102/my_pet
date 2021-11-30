@@ -1,6 +1,7 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:my_pet/controllers/user_controller.dart';
 import 'package:my_pet/repositories/food_repository.dart';
 import 'package:my_pet/utils/logger.dart';
 
@@ -12,6 +13,7 @@ class EatingController extends GetxController {
   final FoodRepository _repo;
 
   static EatingController get to => Get.find<EatingController>();
+  final UserController _userController = UserController.to;
 
   EatingController(this._repo);
 
@@ -34,15 +36,15 @@ class EatingController extends GetxController {
     food(foodStr);
   }
 
-
   Future submit() async {
-   Log.info(food.value);
+    Log.info(food.value);
 
-   Log.debug(DateTime.tryParse('${date.value} ${time.value}')!.millisecondsSinceEpoch);
-   _repo.addFood({
-     'timestamp': DateTime.tryParse('${date.value} ${time.value}')!.millisecondsSinceEpoch,
-     'food': food.value,
-   });
+    Log.debug(DateTime.tryParse('${date.value} ${time.value}')!
+        .millisecondsSinceEpoch);
+    _repo.addFood(
+        timestamp: DateTime.tryParse('${date.value} ${time.value}')!
+            .millisecondsSinceEpoch,
+        food: food.value,
+        petId: '123');
   }
-
 }

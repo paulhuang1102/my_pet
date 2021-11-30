@@ -2,6 +2,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:my_pet/controllers/pet_controller.dart';
 import 'package:my_pet/repositories/user_repository.dart';
 import 'package:my_pet/routes/app_pages.dart';
 import 'package:my_pet/utils/logger.dart';
@@ -11,9 +12,11 @@ import '../models/user_model.dart';
 class UserController extends GetxController {
   final _user = Rx<User?>(User());
   final UserRepository _repo;
+  final PetController petController = PetController.to;
 
   static UserController get to => Get.find<UserController>();
   User? get user => _user.value;
+
 
   UserController(this._repo);
 
@@ -29,17 +32,17 @@ class UserController extends GetxController {
 
     if (user != null) {
       setUser(user);
+
+      petController.getPets();
       Get.offNamed(ROUTES.home);
     } else {
       Get.offNamed(ROUTES.createUser);
     }
     // AnalyticsService.log(LoginEvent());
-
   }
 
   void checkUser() async {
     final succeess = await _repo.checkUser();
-    Log.debug(succeess);
     if (succeess) {
       loginUser();
     } else {
@@ -50,6 +53,7 @@ class UserController extends GetxController {
 
   void logut() async {
     _repo.logout();
+    petController.clearPets();
     Get.offAllNamed(ROUTES.login);
   }
 }

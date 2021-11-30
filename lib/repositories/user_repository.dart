@@ -2,8 +2,8 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:my_pet/models/credentail_model.dart';
 import 'package:my_pet/models/user_model.dart';
 import 'package:my_pet/services/amplify/amplify_service.dart';
-import 'package:my_pet/services/amplify/graphql/mutations/user_mutation.dart';
-import 'package:my_pet/services/amplify/graphql/queries/user_query.dart';
+import 'package:my_pet/services/graphql/mutations/user_mutation.dart';
+import 'package:my_pet/services/graphql/queries/user_query.dart';
 
 class UserRepository {
   final _amplify = AmplifyService();

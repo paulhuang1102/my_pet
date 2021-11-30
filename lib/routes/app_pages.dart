@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:my_pet/bindings/add_pet_binding.dart';
 import 'package:my_pet/bindings/create_user_binding.dart';
 import 'package:my_pet/bindings/eating_binding.dart';
 import 'package:my_pet/bindings/login_binding.dart';
 import 'package:my_pet/bindings/signup_binding.dart';
 import 'package:my_pet/bindings/verify_binding.dart';
 import 'package:my_pet/middlewares/route_auth.dart';
+import 'package:my_pet/pages/add_pet_page.dart';
 import 'package:my_pet/pages/create_user_page.dart';
 import 'package:my_pet/pages/eating_page.dart';
 import 'package:my_pet/pages/home_page.dart';
@@ -23,7 +25,7 @@ abstract class AppPages {
     // ),
     GetPage(
       name: ROUTES.home,
-      page: () => const HomePage(),
+      page: () => HomePage(),
       middlewares: [
         RouteAuthMiddleware(),
       ],
@@ -62,6 +64,16 @@ abstract class AppPages {
       name: ROUTES.createUser,
       page: () => CreateUserPage(),
       bindings: [CreateUserBinding()],
+      middlewares: [
+        RouteAuthMiddleware(),
+      ],
+    ),
+    GetPage(
+      name: ROUTES.addPet,
+      page: () => AddPetPage(),
+      bindings: [
+        AddPetBinding(),
+      ],
       middlewares: [
         RouteAuthMiddleware(),
       ],

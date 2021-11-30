@@ -8,5 +8,6 @@ abstract class ROUTES {
   static const toilet = '/toilet';
   static const verification = '/verfication';
   static const eating = '/eating';
-  static const createUser = '/create_user';
+  static const createUser = '/add/user';
+  static const addPet = '/add/pet';
 }

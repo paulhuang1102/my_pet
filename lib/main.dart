@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:my_pet/repositories/pet_repository.dart';
 import 'package:my_pet/repositories/user_repository.dart';
 import 'package:my_pet/services/amplify/amplify_service.dart';
 
+import 'controllers/pet_controller.dart';
 import 'controllers/user_controller.dart';
 import 'routes/app_pages.dart';
 
@@ -13,6 +15,7 @@ void main() async {
 }
 
 initialize() async {
+  Get.put<PetController>(PetController(PetRepository()), permanent: true);
   Get.put<UserController>(UserController(UserRepository()), permanent: true);
 }
 
@@ -25,6 +28,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final UserController userControllder = UserController.to;
+
   @override
   void initState() {
     _init();
