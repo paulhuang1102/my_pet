@@ -27,6 +27,7 @@ class PetController extends GetxController {
         data.items
             .map(
               (el) => Pet(
+                id: el['id'],
                 userId: userController.user!.id,
                 name: el['name'],
                 photoUrl: el['photoUrl'],

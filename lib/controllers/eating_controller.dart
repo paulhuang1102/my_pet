@@ -1,50 +1,46 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:my_pet/controllers/pet_controller.dart';
 import 'package:my_pet/controllers/user_controller.dart';
+import 'package:my_pet/models/eating_model.dart';
 import 'package:my_pet/repositories/food_repository.dart';
 import 'package:my_pet/utils/logger.dart';
 
 class EatingController extends GetxController {
-  final date = ''.obs;
-  final time = ''.obs;
-  final food = ''.obs;
-
   final FoodRepository _repo;
-
-  static EatingController get to => Get.find<EatingController>();
-  final UserController _userController = UserController.to;
-
+  String? listNextToken;
   EatingController(this._repo);
+
+  static get to => Get.find<EatingController>();
+
+  final UserController userController = UserController.to;
+  final PetController petController = PetController.to;
+
+  final eatings = RxList<Eating>([]);
 
   @override
   void onInit() {
-    _repo.getList();
+    getEatings();
     super.onInit();
   }
 
-  void setDate(String dataStr) {
-    date(dataStr);
+  void addEating(Eating eating) {
+    eatings.add(eating);
   }
 
-  void setTime(String timeStr) {
-    Log.debug(timeStr);
-    time(timeStr);
-  }
+  void getEatings() async {
+    print(petController.pets[0].id);
+    final data =
+        await _repo.getFoodList(petController.pets[0].id, listNextToken);
 
-  void setFood(String foodStr) {
-    food(foodStr);
-  }
-
-  Future submit() async {
-    Log.info(food.value);
-
-    Log.debug(DateTime.tryParse('${date.value} ${time.value}')!
-        .millisecondsSinceEpoch);
-    _repo.addFood(
-        timestamp: DateTime.tryParse('${date.value} ${time.value}')!
-            .millisecondsSinceEpoch,
-        food: food.value,
-        petId: '123');
+    listNextToken = data.nextToken;
+    eatings(data.items
+        .map((el) => Eating(
+            id: el['id'],
+            food: el['food'],
+            date: DateTime.fromMillisecondsSinceEpoch(
+                int.parse(el['timestamp']))))
+        .toList());
   }
 }

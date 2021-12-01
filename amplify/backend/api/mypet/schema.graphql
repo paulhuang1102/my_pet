@@ -19,5 +19,12 @@ type Eating @model
   id: ID!
   petId: ID!
   food: String!
-  timestamp: Int!
+  timestamp: String!
+}
+
+type Toilet @model {
+  id: ID!
+  petId: ID!
+  type: Int!
+  timestamp: String!
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/state_manager.dart';
+import 'package:my_pet/controllers/add_eating_controller.dart';
 import 'package:my_pet/controllers/eating_controller.dart';
 import 'package:my_pet/routes/app_pages.dart';
 import 'package:my_pet/widgets/appbar.dart';
 
 class EatingPage extends StatelessWidget {
   EatingPage({Key? key}) : super(key: key);
-  final controller = EatingController.to;
+  final AddEatingController controller = AddEatingController.to;
+  final EatingController eatingController = EatingController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +28,22 @@ class EatingPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: DefaultAppbar(routeName: ROUTES.eating,),
+      appBar: DefaultAppbar(
+        routeName: ROUTES.eating,
+      ),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) =>
+                      Text(eatingController.eatings[index].food),
+                  itemCount: eatingController.eatings.length,
+                ),
+              ),
+            ),
             _dateTimeSelector(
               'Select Date',
               controller.date,
@@ -44,8 +57,8 @@ class EatingPage extends StatelessWidget {
                 ).then(
                   (value) {
                     if (value != null) {
-                      controller
-                          .setDate('${value.year}-${value.month}-${value.day}');
+                      controller.setDate(
+                          '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}');
                     }
                   },
                 );
@@ -58,7 +71,8 @@ class EatingPage extends StatelessWidget {
               ).then(
                 (value) {
                   if (value != null) {
-                    controller.setTime('${value.hour}:${value.minute.toString().padLeft(2, '0')}');
+                    controller.setTime(
+                        '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}');
                   }
                 },
               );
@@ -70,18 +84,17 @@ class EatingPage extends StatelessWidget {
                 decoration: const InputDecoration(
                   labelText: 'Food',
                 ),
-                onChanged: (value) {
-                  controller.setFood(value);
-                },
+                controller: controller.foodController,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: ElevatedButton(
-                  child: const Text('Add'),
-                  onPressed: () {
-                    controller.submit();
-                  },),
+                child: const Text('Add'),
+                onPressed: () {
+                  controller.submit();
+                },
+              ),
             ),
           ],
         ),

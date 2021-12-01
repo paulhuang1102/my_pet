@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:my_pet/bindings/add_eating_binding.dart';
 import 'package:my_pet/bindings/add_pet_binding.dart';
 import 'package:my_pet/bindings/create_user_binding.dart';
 import 'package:my_pet/bindings/eating_binding.dart';
@@ -23,13 +24,11 @@ abstract class AppPages {
     //   name: ROUTES.splash,
     //   page: () => const SplashPage(),
     // ),
-    GetPage(
-      name: ROUTES.home,
-      page: () => HomePage(),
-      middlewares: [
-        RouteAuthMiddleware(),
-      ],
-    ),
+    GetPage(name: ROUTES.home, page: () => HomePage(), middlewares: [
+      RouteAuthMiddleware(),
+    ], bindings: [
+      AddEatingBinding()
+    ]),
     GetPage(
       name: ROUTES.login,
       page: () => LoginPage(),
@@ -55,7 +54,7 @@ abstract class AppPages {
     GetPage(
       name: ROUTES.eating,
       page: () => EatingPage(),
-      binding: EatingBinding(),
+      bindings: [EatingBinding(), AddEatingBinding()],
       middlewares: [
         RouteAuthMiddleware(),
       ],
